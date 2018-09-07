@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orderapp-ack-deployment
+  labels:
+    app: orderapp
+spec:
+  replicas: 3
+  minReadySeconds: 10
+  selector:
+    matchLabels:
+      app: orderapp-ack
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: orderapp-ack
+    spec:
+      containers:
+      - name: symf-app
+        image: tombennett/api:v2
+        volumeMounts:
+          - name: log-storage
+            mountPath: /data/logs
+        ports:
+          - containerPort: 8001
+        imagePullPolicy: Always
+        env:
+        - name: SYMFONY__RABBITMQ__HOST
+          value: "rabbitmq"
+        - name: SYMFONY__RABBITMQ__PORT
+          value: "5672"
+        - name: SYMFONY__RABBITMQ__SCHEME
+          value: "amqp:"
+        - name: SYMFONY__RABBITMQ__PROXY_AUTHORISATION
+          value: ""
+        - name: SYMFONY__RABBITMQ__BASE_URL
+          value: ""
+        - name: SYMFONY__RABBITMQ__USERNAME
+          value: "guest"
+        - name: SYMFONY__RABBITMQ__PASSWORD
+          value: "guest"
+        - name: SYMFONY__RABBITMQ__VHOST
+          value: "/"
+        - name: SYMFONY__RABBITMQ__EXCHANGE_NAME
+          value: "" # Default exchange
+      volumes:
+      - name: log-storage
+        emptyDir: {}

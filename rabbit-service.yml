@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: orderapp-rabbit-management-service
+  labels:
+    app: orderapp
+spec:
+  type: NodePort
+  ports:
+  - port: 15672
+    nodePort: 30002
+    name: http
+  selector:
+    app: orderapp-rabbit
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orderapp-rabbit-service
+  labels:
+    app: orderapp
+spec:
+  ports:
+  - port: 5672
+    name: amqp
+  - port: 4369
+    name: epmd
+  - port: 25672
+    name: rabbitmq-dist
+  clusterIP: None
+  selector:
+    app: orderapp-rabbitkube
