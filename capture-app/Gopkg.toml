@@ -1,0 +1,23 @@
+[[constraint]]
+  name = "github.com/astaxie/beego"
+  version = "1.9.2"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/streadway/amqp"
+
+[[constraint]]
+  branch = "v2"
+  name = "gopkg.in/mgo.v2"
+
+[[constraint]]
+  name = "pack.ag/amqp"
+  version = "0.4.0"
+
+[[constraint]]
+  branch = "go1"
+  name = "qpid.apache.org"
+
+[prune]
+  go-tests = true
+  unused-packages = true

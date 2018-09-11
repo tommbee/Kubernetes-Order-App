@@ -11,6 +11,8 @@ class RabbitmqOrderConsumer implements ConsumerInterface {
 
     public function execute(AMQPMessage $msg)
     {
+        $body = json_decode($msg->getBody(), true);
+
         // TODO: Implement execute() method.
     }
 }
