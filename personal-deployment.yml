@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: personal-app-deployment
+  labels:
+    app: personal
+spec:
+  replicas: 3
+  minReadySeconds: 10
+  selector:
+    matchLabels:
+      app: personal-app
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: personal-app
+    spec:
+      containers:
+      - name: personal-app
+        image: tombennett/personal:v2
+        resources:
+          limits:
+            cpu: "0.6"
+          requests:
+            cpu: "0.3"
+        ports:
+          - containerPort: 8001
+        imagePullPolicy: Always
