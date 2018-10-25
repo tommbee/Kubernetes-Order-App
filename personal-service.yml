@@ -8,6 +8,7 @@ spec:
   type: LoadBalancer
   ports:
   - port: 80
+    targetPort: 8001 # Docker container port
   selector:
     app: personal-app
     

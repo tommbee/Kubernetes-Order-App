@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: personal-app
-        image: tombennett/personal:v2
+        image: tombennett/personal:v3
         resources:
           limits:
             cpu: "0.6"
